@@ -9,7 +9,7 @@
 ## Installation
 
 ```
-to-do
+npm install listbox-menu-component
 ```
 
 ## Features
