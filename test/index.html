@@ -1,0 +1,67 @@
+<!DOCTYPE 5>
+<html>
+  <head>
+    <title>Listbox-Menu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="out.css" />
+  </head>
+  <body>
+    <title>Listbox-Menu</title>
+    <script src="out.js"></script>
+    <script>
+      var listboxMenu = require('listbox-menu');
+
+      var data = [
+        {
+          league: "Scottish Premier League",
+          teams: ["Aberdeen", "Celtic", "Dundee", "Dundee Utd", "Hearts", "Hibs", "Inverness CT", "Kilmarnock", "Motherwell", "Ross County", "St Johnstone", "St Mirren"]
+        },
+        {
+          league: "First Division",
+          teams: ["Airdrie", "Cowdenbeath", "Dumbarton", "Dunfermline", "Falkirk", "Hamilton", "Livingston", "Morton", "Partick Thistle", "Raith Rovers"]
+        },
+        {
+          league: "Second Division",
+          teams: ["Albion Rovers", "Alloa", "Arbroath", "Ayr Utd", "Brechin", "East Fife", "Forfar", "Queen of the South", "Stenhousemuir", "Stranraer"]
+        },
+        {
+          league: "Third Division",
+          teams: ["Annan Athletic", "Berwick Rangers", "Clyde", "East Stirlingshire", "Elgin City", "Montrose", "Peterhead", "Queens Park", "Rangers", "Stirling Albion" ]
+        }
+      ];
+  
+      var menu = new listboxMenu();
+      var submenu = new listboxMenu();
+      submenu.setSelectChecker(function(item) {
+        return confirm("Do you really want to do this?");
+      });
+
+      for (var i = 0; i < data.length; i++) {
+        menu.add(i, data[i].league);
+      };
+
+      menu.on('Add item', function(){
+        console.log('added an item');
+      });
+      menu.on('select', function(item){
+        var teams;
+        submenu.reset();
+        teams = data[parseInt(item)].teams;
+        for (var i = 0; i < teams.length; i++) {
+          submenu.add(teams[i]);
+        };
+      }); 
+
+  
+      submenu.on('select', function(item){
+        console.log('selected "%s"', item);
+      });
+
+      menu.moveTo(100, 100);
+      submenu.moveTo(275,100);
+      menu.show();
+      submenu.show();
+
+    </script>
+  </body>
+</html>

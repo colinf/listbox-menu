@@ -1,0 +1,15 @@
+{
+  "name": "listbox-menu-component",
+  "description": "Listbox Menu component",
+  "version": "0.0.1",
+  "keywords": ["menu", "component"],
+  "dependencies": {
+    "jquery-component": "*",
+    "menu-component": "*"
+  },
+  "component": {
+    "scripts": {
+      "listbox-menu": "index.js"
+    }
+  }
+}
