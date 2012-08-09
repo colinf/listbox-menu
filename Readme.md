@@ -2,8 +2,9 @@
 # Listbox Menu
 
   A Listbox Menu component with structural styling to give you a clean slate.
+  The Listbox Menu component is built on top of [Menu](http://github.com/component/menu).
 
-  ![js listbox menu component](http://f.cl.ly/items/1Z1d3B1j283y3e200g3E/Screen%20Shot%202012-07-31%20at%203.57.10%20PM.png)
+  ![js listbox menu component](http://colinf.github.com/listbox-menu/images/Listbox-Menu.png)
 
 ## Installation
 
@@ -16,10 +17,10 @@ to-do
   - events for composition
   - structural CSS letting you decide on style
   - fluent API
-  - arrow key navigation
 
 ## Events
 
+Events are inherited from Menu as listed below.
   - `show` when shown
   - `hide` when hidden
   - `remove` (item) when an item is removed
@@ -29,128 +30,84 @@ to-do
 ## Example
 
 ```js
-var Menu = require('menu');
+var listboxMenu = require('listbox-menu');
 
-var menu = new Menu;
-
-menu
-.add('Add item')
-.add('Edit item', function(){ console.log('edit'); })
-.add('Remove item', function(){ console.log('remove'); })
-.add('Remove "Add item"', function(){
-  menu.remove('Add item');
-  menu.remove('Remove "Add item"');
+var data = [
+  {
+    league: "Scottish Premier League",
+    teams: ["Aberdeen", "Celtic", "Dundee", "Dundee Utd", "Hearts", "Hibs", "Inverness CT", "Kilmarnock", "Motherwell", "Ross County", "St Johnstone", "St Mirren"]
+  },
+  {
+    league: "First Division",
+    teams: ["Airdrie", "Cowdenbeath", "Dumbarton", "Dunfermline", "Falkirk", "Hamilton", "Livingston", "Morton", "Partick Thistle", "Raith Rovers"]
+  },
+  {
+    league: "Second Division",
+    teams: ["Albion Rovers", "Alloa", "Arbroath", "Ayr Utd", "Brechin", "East Fife", "Forfar", "Queen of the South", "Stenhousemuir", "Stranraer"]
+  },
+  {
+    league: "Third Division",
+    teams: ["Annan Athletic", "Berwick Rangers", "Clyde", "East Stirlingshire", "Elgin City", "Montrose", "Peterhead", "Queens Park", "Rangers", "Stirling Albion" ]
+  }
+];
+  
+var menu = new listboxMenu();
+var submenu = new listboxMenu();
+submenu.setSelectChecker(function(item) {
+  return confirm("Do you really want to do this?");
 });
 
+for (var i = 0; i < data.length; i++) {
+  menu.add(i, data[i].league);
+};
+
 menu.on('select', function(item){
+  var teams;
+  submenu.reset();
+  teams = data[parseInt(item)].teams;
+  for (var i = 0; i < teams.length; i++) {
+    submenu.add(teams[i]);
+  };
+}); 
+  
+submenu.on('select', function(item){
   console.log('selected "%s"', item);
 });
 
-menu.on('Add item', function(){
-  console.log('added an item');
-});
-
-oncontextmenu = function(e){
-  e.preventDefault();
-  menu.moveTo(e.pageX, e.pageY);
-  menu.show();
-};
+ menu.moveTo(100, 100);
+ submenu.moveTo(275,100);
+ menu.show();
+ submenu.show();
 ```
 
 ## API
+
+As well as the Menu API, Listbox Menu adds the following.
   
-### Menu()
+### ListboxMenu()
 
-  Create a new `Menu`:
-
-```js
-var Menu = require('menu');
-var menu = new Menu();
-var menu = Menu();
-```
-
-### Menu#add([slug], text, [fn])
-
-  Add a new menu item with the given `text`, optional `slug` and callback `fn`.
-
-  Using events to handle selection:
+  Create a new `ListboxMenu`:
 
 ```js
-menu.add('Hello');
-
-menu.on('Hello', function(){
-  console.log('clicked hello');
-});
+var ListboxMenu = require('listbox-menu');
+var menu = new ListboxMenu();
 ```
 
-  Using callbacks:
+### ListboxMenu#reset()
 
-```js
-menu.add('Hello', function(){
-  console.log('clicked hello');
-});
-```
+ Empties all items from the menu.
+ 
+### ListboxMenu#setSelectChecker(fn)
 
-  Using a custom slug, otherwise "hello" is generated
-  from the `text` given, which may conflict with "rich"
-  styling like icons within menu items, or i18n.
+Add a function to the Listbox Menu which will be called when a menu item is clicked. If the function returns false then the select event will be abandoned. This allows functionality such as a confirmation dialog prior to switching to a new menu item.
 
-```js
-menu.add('add-item', 'Add Item');
+## Summary of Differences from Menu
 
-menu.on('add-item', function(){
-  console.log('clicked "Add Item"');
-});
-
-menu.add('add-item', 'Add Item', function(){
-  console.log('clicked "Add Item"');
-});
-```
-
-### Menu#remove(slug)
-
-  Remove an item by the given `slug`:
-
-```js
-menu.add('Add item');
-menu.remove('Add item');
-```
-
-  Or with custom slugs:
-
-```js
-menu.add('add-item', 'Add item');
-menu.remove('add-item');
-```
-
-### Menu#has(slug)
-
-  Check if a menu item is present.
-
-```js
-menu.add('Add item');
-
-menu.has('Add item');
-// => true
-
-menu.has('add-item');
-// => true
-
-menu.has('Foo');
-// => false
-```
-
-### Menu#moveTo(x, y)
-
-  Move the menu to `(x, y)`.
-
-### Menu#show()
-
-  Show the menu.
-
-### Menu#hide()
-
-  Hide the menu.
+* Intended to be used as on-screen navigation menu as opposed to  a contect menu
+* Listbox Menu doesn't hide when clicked
+* Selected item is not deselected on hover
+* Allows validation of selection events (via setSelectChecker)
+* Listbox menu currently doesn't support keyboard navigation
 
 ## License
 

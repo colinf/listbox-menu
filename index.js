@@ -100,9 +100,8 @@ ListboxMenu.prototype.setSelectChecker = function(checker) {
 };
 
 ListboxMenu.prototype.reset = function() {
-  for (var key in this.items) {
-    this.items[key].remove();
-  }
+  this.el.empty();
+  this.items = {};
 }
 
 function createSlug(str) {
