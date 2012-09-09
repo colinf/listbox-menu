@@ -1,0 +1,12 @@
+{
+  "name": "listbox-menu",
+  "description": "Listbox Menu component",
+  "version": "0.0.2",
+  "keywords": ["listbox", "menu", "component"],
+  "dependencies": {
+    "component/jquery": "*",
+    "component/menu": "*"
+  },
+  "scripts": ["index.js"],
+  "repo": "https://raw.github.com/colinf/listbox-menu"
+}

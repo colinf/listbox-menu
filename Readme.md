@@ -2,6 +2,7 @@
 # Listbox Menu
 
   A Listbox Menu component with structural styling to give you a clean slate.
+
   The Listbox Menu component is built on top of [Menu](http://github.com/component/menu).
 
   ![js listbox menu component](http://colinf.github.com/listbox-menu/images/Listbox-Menu.png)
@@ -9,8 +10,10 @@
 ## Installation
 
 ```
-npm install listbox-menu-component
+component install colinf/listbox-menu
 ```
+
+You can find out more about using and installing components [here](https://github.com/component/component).
 
 ## Features
 
