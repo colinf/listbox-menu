@@ -27,6 +27,7 @@ module.exports = ListboxMenu;
  */
 
 function ListboxMenu() {
+  if (!(this instanceof ListboxMenu)) return new ListboxMenu;
   Menu.call(this);
   this.el.addClass('listbox-menu');
   this.el.hover(this.deselect.bind(this));
