@@ -8,5 +8,5 @@
     "component/menu": "*"
   },
   "scripts": ["index.js"],
-  "repo": "https://raw.github.com/colinf/listbox-menu"
+  "repo": "colinf/listbox-menu"
 }
